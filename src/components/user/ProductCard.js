@@ -38,7 +38,7 @@ export const ProductCard = ({ product }) => {
           <Link to={`/product-details/${productSlug}/${_id}`}>
             <h3>{name?.substring(0, 17)}</h3>
           </Link>
-          <p>${price}</p>
+          <p>Rs {price}</p>
         </div>
         <p className="font-normal text-sm">
           {description?.substring(1, 45)}...

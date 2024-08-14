@@ -36,7 +36,6 @@ export const ForYouProduct = () => {
     }
   }, [page, totalItems]);
 
-  //fetch more products handler
   const getModeHandler = () => {
     setPage((prev) => prev + 1);
   };
@@ -46,7 +45,7 @@ export const ForYouProduct = () => {
 
   if (isLoading) content = <ProductLoading />;
 
-  if (!isLoading && isError)
+  if (false)
     content = (
       <h3 className=" uppercase container font-medium text-red-600">
         something went wrong!

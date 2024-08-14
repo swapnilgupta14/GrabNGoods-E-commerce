@@ -4,11 +4,11 @@ export const ProductCardSkeleton = () => {
   return (
     <div
       role="status"
-      className="max-w-[250px] h-[325px] border-gray-100 border rounded-md shadow animate-pulse  p-1"
+      className="max-w-[250px] h-[325px] border-gray-100 border rounded-md shadow animate-pulse p-1"
     >
       <div className="flex items-center justify-center h-44 mb-4 bg-gray-300 rounded">
         <svg
-          className="w-10 h-10 text-gray-200 dark:text-gray-600"
+          className="w-10 h-10 text-gray-200"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
