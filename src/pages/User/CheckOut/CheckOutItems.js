@@ -35,7 +35,7 @@ export const CheckOutItems = ({ item }) => {
       >
         {name?.substring(0, 25)}
       </th>
-      <td className="px-6 py-4">${price}</td>
+      <td className="px-6 py-4">Rs {price}</td>
       <td className="px-6 py-4">
         <div className="flex bg-green-700 rounded-md overflow-hidden">
           <button
@@ -58,7 +58,7 @@ export const CheckOutItems = ({ item }) => {
           </button>
         </div>
       </td>
-      <td className="px-6 py-4">${price * quantity}</td>
+      <td className="px-6 py-4">Rs {price * quantity}</td>
       <td className="px-6 py-4 " onClick={() => removeCartItemHandler(_id)}>
         <button className="text-red-600">X</button>
       </td>

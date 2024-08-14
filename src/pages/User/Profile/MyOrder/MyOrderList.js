@@ -35,7 +35,7 @@ export const MyOrderList = ({ orders }) => {
                   </th>
                   <td className="px-6 py-3 capitalize"></td>
                   <td className="px-6 py-3 capitalize">
-                    Total Amount: ${order.totalAmount}
+                    Total Amount: Rs {order.totalAmount}
                   </td>
                   <td className="px-6 py-3 capitalize">{order.stock}</td>
                   <td className="px-6 py-3 cursor-pointer">
@@ -57,7 +57,7 @@ export const MyOrderList = ({ orders }) => {
                       />
                     </th>
                     <td className="px-6 py-3 capitalize">{item.name}</td>
-                    <td className="px-6 py-3 capitalize">${item.price}</td>
+                    <td className="px-6 py-3 capitalize">Rs {item.price}</td>
                     <td className="px-6 py-3 capitalize">
                       Qty: {item.quantity}
                     </td>

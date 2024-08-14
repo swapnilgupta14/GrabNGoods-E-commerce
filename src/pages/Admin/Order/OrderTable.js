@@ -87,7 +87,7 @@ export const OrderTable = ({ orders }) => {
                       />
                     </th>
                     <td className="px-6 py-3 capitalize">{item.name}</td>
-                    <td className="px-6 py-3 capitalize">${item.price}</td>
+                    <td className="px-6 py-3 capitalize">Rs {item.price}</td>
                     <td className="px-6 py-3 capitalize">
                       Qty: {item.quantity}
                     </td>

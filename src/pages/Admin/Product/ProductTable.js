@@ -72,7 +72,7 @@ export const ProductTable = ({ products }) => {
                     />
                   </th>
                   <td className="px-6 py-3 capitalize">{name}</td>
-                  <td className="px-6 py-3 capitalize">${price}</td>
+                  <td className="px-6 py-3 capitalize">Rs {price}</td>
                   <td className="px-6 py-3 capitalize">{stock}</td>
                   <td
                     className="px-6 py-3 cursor-pointer"

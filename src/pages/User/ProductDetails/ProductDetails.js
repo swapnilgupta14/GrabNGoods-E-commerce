@@ -116,9 +116,9 @@ export const ProductDetails = () => {
             <p className="font-medium flex items-center">
               Price:
               <span className="text-orange-600 text-3xl font-semibold pl-2">
-                ${price}
+                Rs {price}
               </span>
-              <span className="ml-5 text-gray-500 line-through">$2000</span>
+              <span className="ml-5 text-gray-500 line-through">rs 2000</span>
             </p>
             {/* <div className="flex items-center">
               <p className="font-medium">Quantity:</p>
@@ -195,7 +195,7 @@ export const ProductDetails = () => {
                     11 Sep - 18 Sep 7 - 14 day(s)
                   </span>
                 </p>
-                <p className="font-medium">$55</p>
+                <p className="font-medium">Rs 55</p>
               </div>
               <div className="flex space-x-2">
                 <p className="text-xl mt-1 text-gray-600">

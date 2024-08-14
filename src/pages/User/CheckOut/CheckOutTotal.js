@@ -24,16 +24,16 @@ export const CheckOutTotal = () => {
       </div>
       <div className="px-1 py-2">
         <div className="flex justify-between py-2">
-          <p>SubTotal:</p> <p>${subtotal}</p>
+          <p>SubTotal:</p> <p>Rs {subtotal}</p>
         </div>
         <div className="flex justify-between py-2">
-          <p>Dalevary Charge:</p> <p>${dalevaryCharge}</p>
+          <p>Dalevary Charge:</p> <p>Rs{dalevaryCharge}</p>
         </div>
 
         <div className="flex flex-col  py-2">
           <p className="border"></p>
           <p className="flex justify-between">
-            Total:<span>${totalPrice}</span>{" "}
+            Total:<span>Rs {totalPrice}</span>{" "}
           </p>
         </div>
         <div className="flex justify-center mt-4">

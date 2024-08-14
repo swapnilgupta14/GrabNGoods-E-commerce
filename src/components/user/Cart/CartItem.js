@@ -27,7 +27,7 @@ export const CartItem = ({ item }) => {
             <h3>
               <Link to="/">{name?.substring(0, 25)}</Link>
             </h3>
-            <p className="ml-4">${price}</p>
+            <p className="ml-4">Rs {price}</p>
           </div>
           {/* <p className="mt-1 text-sm text-gray-500">Salmon</p> */}
         </div>
