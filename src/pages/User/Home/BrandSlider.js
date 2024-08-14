@@ -30,7 +30,7 @@ export const BrandSlider = () => {
       >
         <SwiperSlide>
           <img
-            src="https://www.oberlo.com/media/1603969791-image-1.jpg?fit=max&fm=jpg&w=1824"
+            src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202304/firmbee-com-ememmpuojlw-unsplash_3-sixteen_nine.jpg?VersionId=1F3teBXsGzGG_OGSWNb_nEx3srvIri6O&size=690:388"
             alt=""
             className="w-full h-full object-cover rounded-md"
           />
@@ -51,14 +51,14 @@ export const BrandSlider = () => {
         </SwiperSlide>{" "}
         <SwiperSlide>
           <img
-            src="https://www.syte.ai/wp-content/uploads/2021/04/image-search-1.jpg"
+            src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202304/firmbee-com-ememmpuojlw-unsplash_3-sixteen_nine.jpg?VersionId=1F3teBXsGzGG_OGSWNb_nEx3srvIri6O&size=690:388"
             alt=""
             className="w-full h-full object-cover rounded-md"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://www.oberlo.com/media/1603969791-image-1.jpg?fit=max&fm=jpg&w=1824"
+            src="https://www.syte.ai/wp-content/uploads/2021/04/image-search-1.jpg"
             alt=""
             className="w-full h-full object-cover rounded-md"
           />
@@ -72,7 +72,7 @@ export const BrandSlider = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://www.oberlo.com/media/1603969791-image-1.jpg?fit=max&fm=jpg&w=1824"
+            src="https://www.syte.ai/wp-content/uploads/2021/04/image-search-1.jpg"
             alt=""
             className="w-full h-full object-cover rounded-md"
           />

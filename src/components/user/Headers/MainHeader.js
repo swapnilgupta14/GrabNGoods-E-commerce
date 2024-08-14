@@ -56,7 +56,7 @@ export const MainHeader = () => {
           {/* logo area */}
           <div className="xl:min-w-[300px]">
             <Link to="/">
-              <h1 className="text-2xl text-white font-semibold">MegaMart</h1>
+              <h1 className="text-2xl text-white font-semibold">GrabNGoods</h1>
             </Link>
           </div>
         </div>

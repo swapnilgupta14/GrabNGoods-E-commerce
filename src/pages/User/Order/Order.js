@@ -1,11 +1,11 @@
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+// import { Elements } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import React, { useState } from "react";
 import { Form } from "../../../components/common/Form/Form";
 import { FormInput } from "../../../components/common/FormInput/FormInput";
 import { PaymentCkeckoutForm } from "./PaymentCkeckoutForm";
 
-const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+// const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
 
 export const Order = () => {
   const [name, setName] = useState("");
@@ -59,9 +59,9 @@ export const Order = () => {
           onChange={(e) => setAddress(e.target.value)}
         />
       </Form>
-      <Elements stripe={stripePromise}>
+      {/* <Elements stripe={stripePromise}>
         <PaymentCkeckoutForm shippingInfo={shippingInfo} />
-      </Elements>
+      </Elements> */}
     </div>
   );
 };

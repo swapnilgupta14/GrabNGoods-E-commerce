@@ -32,7 +32,7 @@ export const MobileMenu = ({ mobileMenu, setMobileMenu }) => {
     >
       <div className="shadow-md">
         <div className="flex items-center justify-between p-3">
-          <p className="text-xl">MegaMart</p>
+          <p className="text-xl">GrabNGoods</p>
           <button className="text-red-500" onClick={() => setMobileMenu(false)}>
             X
           </button>
