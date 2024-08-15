@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import {
   FaCashRegister,
@@ -6,28 +6,46 @@ import {
   FaRegHeart,
   FaSearchLocation,
   FaShareAlt,
-  FaSlack,
   FaStar,
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { ProductDetailsSkeleton } from "../../../components/ui/ProductDetailsSkeleton";
 import { addToCart } from "../../../features/cart/addToCartSlice";
-import { useGetProductQuery } from "../../../features/product/productApi";
 import { setTitle } from "../../../utils/setTitle";
 import { RelatedProduct } from "./RelatedProduct";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [product, setProduct] = useState({});
+  const rating = product?.rating?.rate || 0;
+  let isSuccess = false;
 
-  const rating = 5;
-  const {
-    data: product,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetProductQuery(productId);
+  async function fetchData(url) {
+    try {
+      setIsLoading(true);
+      const response = await fetch(url);
+      if (!response.ok) {
+        setIsError(true);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const product = await response.json();
+      setProduct(product);
+      console.log(product);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return { error: true, message: error.message };
+    }
+  }
+
+  useEffect(() => {
+    const url = "https://fakestoreapi.com/products/" + productId;
+    fetchData(url);
+  }, [productId]);
 
   if (isLoading)
     return (
@@ -38,206 +56,135 @@ export const ProductDetails = () => {
 
   if (!isLoading && isError)
     return (
-      <h3 className=" uppercase font-medium text-red-600">
-        something went wrong!
+      <h3 className="text-center uppercase font-medium text-red-600">
+        Something went wrong!
       </h3>
     );
 
-  if (!isError && !isLoading && isSuccess && product?.length === 0)
+  if (!isError && !isLoading && isSuccess && !product)
     return (
       <p className="text-center uppercase font-medium">No Product found!</p>
     );
 
-  const { name, picture, price, category, description } = product || {};
-
+  const { title, image, price, category, description } = product || {};
   const categoryId = category?._id;
 
-  //add to cart
+  // Add to cart handler
   const addToCartHandler = (item) => {
     dispatch(addToCart(item));
-    toast.success("Product Add To Cart");
+    toast.success("Product added to cart");
   };
 
-  //set ppage title
-  setTitle(`${name} - Product Details`);
+  // Set page title
+  setTitle(`${title} - Product Details`);
+
   return (
-    <div className="container mx-auto my-7 px-2 space-y-5 sm:px-0">
-      <div className="grid grid-cols-1  md:grid-cols-12 gap-6  bg-white rounded-md">
-        {/* product imgaes */}
-        <div className="col-span-12 md:col-span-5 lg:col-span-4 p-3">
-          <img src={picture} alt="product" className="rounded-md" />
+    <div className="container mx-auto my-7 px-4 space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-white rounded-md shadow-lg p-5">
+        {/* Product Image */}
+        <div className="col-span-12 md:col-span-5 lg:col-span-4 flex justify-center items-center">
+          <img src={image} alt="product" className="rounded-md max-w-full h-auto" />
         </div>
 
-        {/* product details */}
-        <div className="col-span-12 md:col-span-6 p-3 lg:col-span-5 space-y-3">
-          <h1 className="text-xl font-medium">{name}</h1>
+        {/* Product Details */}
+        <div className="col-span-12 md:col-span-7 lg:col-span-5 space-y-4">
+          <h1 className="text-2xl font-semibold">{title}</h1>
 
-          <div className="flex justify-between items-center border-b-2 pb-2">
-            <div className="space-y-2">
-              <p className="flex items-center text-sm font-thin space-x-2">
-                <span className="flex items-center text-orange-600">
-                  {Array(rating)
-                    .fill()
-                    .map((i) => (
-                      <FaStar />
-                    ))}
-                </span>
-                <span className="text-green-800 hover:underline hover:cursor-pointer">
-                  {" "}
-                  {rating} Ratings
-                </span>
-                <span>|</span>
-                <span className="text-green-800 hover:underline hover:cursor-pointer">
-                  6 Answered Questions
-                </span>
-              </p>
-              <p className="flex items-center text-sm font-thin space-x-2">
-                <p className="text-green-800">
-                  <span className="text-gray-600">Brand:</span> {"HP"}
-                </p>
-                <span>|</span>
-                <span className="text-green-800 hover:underline hover:cursor-pointer">
-                  <Link to="/">More Men from No Brand</Link>
-                </span>
-              </p>
-            </div>
-
-            <div className="flex items-center space-x-6 text-xl text-gray-800">
-              <span className="cursor-pointer hover:text-orange-600 duration-200 ease-out">
-                <FaShareAlt />
+          <div className="flex flex-col space-y-3 border-b pb-4">
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center text-yellow-500">
+                {Array(Math.floor(rating))
+                  .fill()
+                  .map((_, i) => (
+                    <FaStar key={i} />
+                  ))}
+                {rating % 1 > 0 && <FaStar className="text-yellow-300" />}
+              </div>
+              <span className="text-green-800 text-sm hover:underline cursor-pointer">
+                {rating.toFixed(1)} Ratings
               </span>
-              <span className="cursor-pointer hover:text-orange-600 duration-200 ease-out">
-                <FaRegHeart />
+              <span className="text-gray-500">|</span>
+              <span className="text-green-800 text-sm hover:underline cursor-pointer">
+                6 Answered Questions
               </span>
             </div>
+            <div className="flex items-center space-x-2">
+              <p className="text-sm text-gray-600">
+                <span className="font-medium">Brand:</span> HP
+              </p>
+              <span className="text-gray-500">|</span>
+              <Link to="/" className="text-green-800 text-sm hover:underline">
+                More from this brand
+              </Link>
+            </div>
+            <div className="bg-white rounded-md p-5 space-y-3">
+            <h2 className="text-xl font-semibold">Product Details of {title}</h2>
+            <p className="text-gray-700">{description}</p>
+          </div>
           </div>
 
           <div className="flex justify-between items-center">
-            <p className="font-medium flex items-center">
-              Price:
-              <span className="text-orange-600 text-3xl font-semibold pl-2">
-                Rs {price}
-              </span>
-              <span className="ml-5 text-gray-500 line-through">rs 2000</span>
+            <p className="text-3xl font-semibold text-orange-600">
+              Rs {price.toFixed(2)}
             </p>
-            {/* <div className="flex items-center">
-              <p className="font-medium">Quantity:</p>
-              <div className="flex bg-green-700 rounded-md overflow-hidden">
-                <button
-                  disabled={qty <= 1}
-                  className="bg-green-900 text-white py-1 px-3"
-                  onClick={() => decreaseProductQtyHandler(_id)}
-                >
-                  {" "}
-                  -{" "}
-                </button>
-                <span className=" w-10 bg-transparent text-gray-100 font-normal text-2xl text-center focus:outline-none">
-                  {qty}
-                </span>
-                <button
-                  className="bg-green-900 text-white py-1 px-3"
-                  onClick={() => increaseProductQtyHandler(_id)}
-                >
-                  {" "}
-                  +{" "}
-                </button>
-              </div>
-            </div> */}
+            <p className="text-gray-500 line-through">Rs 2000</p>
           </div>
 
-          {/* button for add to cart */}
-          <div className="flex gap-5 pt-5">
+          {/* Buttons */}
+          <div className="flex gap-4">
             <button
-              className="hover:bg-white duration-200 ease-linear bg-orange-600 hover:text-orange-600 text-white border border-orange-600 w-full rounded-md py-1"
+              className="bg-orange-600 text-white w-full py-2 rounded-md hover:bg-white hover:text-orange-600 border border-orange-600 transition duration-200"
               onClick={() => addToCartHandler(product)}
             >
               Add To Cart
             </button>
             <button
-              className="bg-white duration-200 ease-linear hover:bg-orange-600 text-orange-600 hover:text-white border border-orange-600 w-full rounded-md py-1"
+              className="bg-white text-orange-600 w-full py-2 rounded-md hover:bg-orange-600 hover:text-white border border-orange-600 transition duration-200"
               onClick={() => addToCartHandler(product)}
             >
               Buy Now
             </button>
-          </div>
+          </div>         
         </div>
 
-        {/* extra informations */}
-        <div className="col-span-12 md:col-span-5 lg:col-span-3 p-3 bg-gray-50 rounded-tr-md rounded-br-md overflow-hidden">
-          {/* delivery */}
+        {/* Delivery and Services */}
+        <div className="col-span-12 lg:col-span-3 p-4 bg-gray-50 rounded-md space-y-4">
           <div>
-            <div className="pb-2">
-              <p className="text-sm text-gray-500">Delivery</p>
-            </div>
-            <div className="flex space-x-2">
-              <p className="text-xl mt-2 text-gray-600">
-                <FaSearchLocation />
-              </p>
-              <div className="flex justify-between items-center">
-                <p className="leading-5">
-                  Dhaka, Dhaka North, Banani Road No. 12 - 19
-                </p>
-                <p className="uppercase text-sm text-green-700 font-medium cursor-pointer">
+            <h3 className="text-lg font-semibold text-gray-700">Delivery</h3>
+            <div className="flex items-center space-x-2 mt-2">
+              <FaSearchLocation className="text-xl text-gray-600" />
+              <p className="text-gray-700">
+                Kanpur, Uttar Pradesh, 208001, India{" "}
+                <span className="text-green-700 font-medium cursor-pointer">
                   change
-                </p>
-              </div>
+                </span>
+              </p>
             </div>
-            <p className="pt-2 border-b-2" />
-
-            <div className="py-3 space-y-3">
-              <div className="flex justify-between space-x-2">
-                <p className="text-xl mt-2 text-gray-600">
-                  <FaCashRegister />
-                </p>
-                <p className="font-medium">
-                  Standard Delivery{" "}
-                  <span className="text-sm text-gray-600 font-normal">
-                    11 Sep - 18 Sep 7 - 14 day(s)
-                  </span>
-                </p>
-                <p className="font-medium">Rs 55</p>
-              </div>
-              <div className="flex space-x-2">
-                <p className="text-xl mt-1 text-gray-600">
-                  <FaCashRegister />
-                </p>
-                <p className="font-normal">Cash on Delivery Available</p>
-              </div>
-              <p className="pt-2 border-b-2" />
+            <div className="flex justify-between items-center mt-4">
+              <p className="text-gray-600">
+                Standard Delivery (7 - 14 days)
+              </p>
+              <p className="text-gray-700 font-medium">Rs {price.toFixed(2)}</p>
             </div>
           </div>
-          {/* services */}
-          <div className="space-y-3">
-            <div className="">
-              <p className="text-sm text-gray-500">Delivery</p>
-            </div>
-            <div className="flex space-x-2">
-              <p className="text-xl mt-1 text-gray-600">
-                <FaChair />
-              </p>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-700">Services</h3>
+            <div className="flex items-center space-x-2 mt-2">
+              <FaChair className="text-xl text-gray-600" />
               <div>
-                <p className="font-medium">7 Days Returns</p>
-                <p className="font-thin text-sm text-gray-600">
+                <p className="font-medium text-gray-700">7 Days Returns</p>
+                <p className="text-sm text-gray-500">
                   Change of mind is not applicable
                 </p>
               </div>
             </div>
-            <div className="flex space-x-2">
-              <p className="text-xl mt-1 text-gray-600">
-                <FaSlack />
-              </p>
-              <p className="font-medium">Warranty not available</p>
+            <div className="flex items-center space-x-2 mt-2">
+              <FaCashRegister className="text-xl text-gray-600" />
+              <p className="font-medium text-gray-700">Cash on Delivery Available</p>
             </div>
-
-            <p className="pt-2 border-b-2" />
           </div>
         </div>
-      </div>
-
-      {/* product description */}
-      <div className=" bg-white rounded-md p-3 space-y-2">
-        <p className="text-1xl font-medium">Product details of {name}</p>
-        <p className="text-sm">{description}</p>
       </div>
       <RelatedProduct categoryId={categoryId} />
     </div>

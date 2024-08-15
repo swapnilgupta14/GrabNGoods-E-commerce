@@ -21,12 +21,12 @@ export const UserLogin = () => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      toast.success("Login Successfull");
+      toast.success("Login Successful");
       navigate("/");
     }
     if (!isLoading && !isSuccess && resError) {
-        setError(resError.data?.message);
-        console.log(resError)
+      setError(resError.data?.message);
+      console.log(resError);
     }
   }, [isLoading, isSuccess, navigate, resError]);
 
@@ -39,21 +39,24 @@ export const UserLogin = () => {
 
   //set page title
   setTitle("User Login");
+
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="mx-2 sm:mx-0 sm:w-[350px] bg-slate-100 px-2 py-4 rounded-md">
-        <div className="flex flex-col items-center justify-center pb-4">
-          <span className="text-green-600 text-5xl pb-1">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white rounded-xl shadow-xl p-8 sm:p-10 w-full max-w-lg mx-4">
+        <div className="flex flex-col items-center pb-6">
+          <span className="text-green-600 text-7xl">
             <AiOutlineBug />
           </span>
-          <h3 className="text-2xl font-semibold">Login Your Account</h3>
+          <h3 className="text-3xl font-semibold text-gray-800 mt-4">
+            Login to Your Account
+          </h3>
         </div>
         <Form onSubmit={userLoginHandler}>
           <FormInput
             label="Email"
             type="email"
             name="email"
-            placeholder="your email"
+            placeholder="Your email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -62,19 +65,19 @@ export const UserLogin = () => {
             label="Password"
             type="password"
             name="password"
-            placeholder="your password"
+            placeholder="Your password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button name="Login" className="w-full" />
-              </Form>
-              {error !== "" && <Error error={error} />}
-        <div className="mt-4 mb-3 text-center">
-          <span>
-            you don't have an account? please{" "}
-            <Link to="/register" className="text-[#28a745] font-normal">
+          <Button name="Login" className="w-full mt-6" />
+        </Form>
+        {error && <Error error={error} className="mt-4" />}
+        <div className="mt-8 text-center">
+          <span className="text-gray-600">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-green-600 font-semibold">
               Register here.
             </Link>
           </span>

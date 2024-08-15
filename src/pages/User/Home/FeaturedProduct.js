@@ -19,9 +19,9 @@ export const FeaturedProduct = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data.products);
+      console.log(data);
       setIsLoading(false);
-      setProducts(data.products);
+      setProducts(data);
       // return data;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -30,7 +30,7 @@ export const FeaturedProduct = () => {
   }
 
   useEffect(() => {
-    const url = 'https://dummyjson.com/products';
+    const url = 'https://fakestoreapi.com/products';
     fetchData(url);
   }, []);
 

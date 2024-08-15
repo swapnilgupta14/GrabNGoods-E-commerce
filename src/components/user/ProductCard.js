@@ -7,9 +7,10 @@ import { addToCart } from "../../features/cart/addToCartSlice";
 import createSlug from "../../utils/createSlug";
 
 export const ProductCard = ({ product }) => {
-  const { _id, picture, description, price, name } = product || {};
+  // console.log(product);
+  const { id, image, description, rating, price, name } = product || {};
 
-  const rating = 5;
+  let p_rating = rating.rate;
 
   const dispatch = useDispatch();
 
@@ -24,10 +25,10 @@ export const ProductCard = ({ product }) => {
 
   return (
     <div className="md:max-w-[250px] h-[325px] bg-white/80 border-gray-100 border rounded-md hover:shadow-lg duration-100 ease-linear">
-      <Link to={`/product-details/${productSlug}/${_id}`}>
+      <Link to={`/product-details/${productSlug}/${id}`}>
         <div className="pt-2">
           <img
-            src={picture}
+            src={image}
             alt="product"
             className="w-full h-36 object-contain"
           />
@@ -35,7 +36,7 @@ export const ProductCard = ({ product }) => {
       </Link>
       <div className="p-2 space-y-2">
         <div className="flex justify-between pt-2 font-semibold text-base">
-          <Link to={`/product-details/${productSlug}/${_id}`}>
+          <Link to={`/product-details/${productSlug}/${id}`}>
             <h3>{name?.substring(0, 17)}</h3>
           </Link>
           <p>Rs {price}</p>
@@ -44,14 +45,13 @@ export const ProductCard = ({ product }) => {
           {description?.substring(1, 45)}...
         </p>
         <p className="flex items-center text-orange-600">
-          {Array(rating)
-            .fill()
-            .map((i) => (
+          {[1, 2, 3, 4, 5]
+            .map(() => (
               <FaStar />
             ))}
 
           <span className="text-gray-500 text-sm font-thin ml-1">
-            ({rating})
+            ({p_rating})
           </span>
         </p>
         <div>
