@@ -24,7 +24,7 @@ export const Header = () => {
               <AiOutlineBug />
             </span>
             <span className="font-semibold text-2xl hidden sm:block">
-              Mgea<span className="text-green-700">Mart</span>
+              GrabN<span className="text-green-700">Goods - Admin</span>
             </span>
           </div>
         </Link>

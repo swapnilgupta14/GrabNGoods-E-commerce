@@ -8,43 +8,49 @@ import { CheckOutTotal } from "./CheckOutTotal";
 export const CheckOut = () => {
   const cartItems = useSelector(selectCartItems);
 
-  //deside
+  // Determine content based on cart items
   let content;
-  if (cartItems?.length === 0) content = <>Cart Is Empty!</>;
-  if (cartItems?.length > 0)
+  if (cartItems?.length === 0) {
+    content = (
+      <tr>
+        <td colSpan="6" className="text-center py-8 text-gray-500">
+          Your cart is empty.
+        </td>
+      </tr>
+    );
+  } else {
     content = cartItems?.map((item) => (
       <CheckOutItems key={item._id} item={item} />
     ));
+  }
 
-  
-  
-  //set page title
+  // Set page title
   setTitle("CheckOut");
 
   return (
-    <div className="container mx-auto my-7">
-      <div className="md:grid md:grid-cols-5 md:gap-x-4">
-        <div className="shadow-md rounded-md p-3 w-full md:col-span-4">
-          <div className=" overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+    <div className="container mx-auto my-10 px-4">
+      <div className="md:grid md:grid-cols-5 md:gap-8">
+        <div className="shadow-lg rounded-lg p-6 w-full bg-white md:col-span-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-gray-700">
+              <thead className="text-xs text-gray-600 uppercase bg-gray-100">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-4 text-left">
                     Product Image
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-4 text-left">
                     Product Name
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-4 text-left">
                     Price
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-4 text-left">
                     Quantity
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-4 text-left">
                     Total
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-4 text-left">
                     Action
                   </th>
                 </tr>
@@ -53,7 +59,7 @@ export const CheckOut = () => {
             </table>
           </div>
         </div>
-        <CheckOutTotal/>
+        <CheckOutTotal />
       </div>
     </div>
   );

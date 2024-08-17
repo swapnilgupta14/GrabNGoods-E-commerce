@@ -3,64 +3,70 @@ import { useDispatch } from "react-redux";
 import { decreaseQty, increaseQty, removeCart } from "../../../features/cart/addToCartSlice";
 
 export const CheckOutItems = ({ item }) => {
-  const { _id, name, picture, quantity, price } = item || {};
+  const { id, title, image, quantity, price, description, category, rating } = item || {};
   const dispatch = useDispatch();
 
-  //remove cart item handler
+  // Remove cart item handler
   const removeCartItemHandler = (id) => {
     dispatch(removeCart(id));
   };
-  //increase product qty
+
+  // Increase product quantity
   const increaseProductQtyHandler = (id) => {
     dispatch(increaseQty({ id, data: quantity + 1 }));
   };
 
-  //decrease product qty
+  // Decrease product quantity
   const decreaseProductQtyHandler = (id) => {
     dispatch(decreaseQty({ id, data: quantity - 1 }));
   };
 
   return (
-    <tr className="bg-white border-b  hover:bg-gray-50">
-      <th scope="row" className="px-6 py-4 ">
+    <tr className="bg-white border-b hover:bg-gray-50">
+      <td className="px-6 py-4">
         <img
-          src={picture}
+          src={image}
           alt="product"
           className="w-20 h-20 object-cover rounded-md"
         />
-      </th>
-      <th
-        scope="row"
-        className="px-6 py-4 font-medium text-gray-600 whitespace-nowrap"
-      >
-        {name?.substring(0, 25)}
-      </th>
-      <td className="px-6 py-4">Rs {price}</td>
+      </td>
+      <td className="px-6 py-4 font-medium text-gray-700">
+        <p className="text-lg">{title?.substring(0, 50)}...</p>
+        <p className="text-sm text-gray-500">{category}</p>
+        <p className="text-xs text-gray-500">{description?.substring(0, 80)}...</p>
+        <p className="text-sm text-yellow-500">
+          Rating: {rating?.rate} ({rating?.count} reviews)
+        </p>
+      </td>
+      <td className="px-6 py-4 font-medium text-gray-700">Rs {price.toFixed(2)}</td>
       <td className="px-6 py-4">
-        <div className="flex bg-green-700 rounded-md overflow-hidden">
+        <div className="flex items-center bg-green-700 rounded-md overflow-hidden">
           <button
             disabled={quantity <= 1}
             className="bg-green-900 text-white py-1 px-3"
-            onClick={() => decreaseProductQtyHandler(_id)}
+            onClick={() => decreaseProductQtyHandler(id)}
           >
-            {" "}
-            -{" "}
+            -
           </button>
-          <span className=" w-10 bg-transparent text-gray-100 font-normal text-2xl text-center focus:outline-none">
+          <span className="w-10 bg-transparent text-gray-100 font-normal text-center">
             {quantity}
           </span>
           <button
             className="bg-green-900 text-white py-1 px-3"
-            onClick={() => increaseProductQtyHandler(_id)}
+            onClick={() => increaseProductQtyHandler(id)}
           >
-            {" "}
-            +{" "}
+            +
           </button>
         </div>
       </td>
-      <td className="px-6 py-4">Rs {price * quantity}</td>
-      <td className="px-6 py-4 " onClick={() => removeCartItemHandler(_id)}>
-        <button className="text-red-600">X</button>
+      <td className="px-6 py-4 font-medium text-gray-700">Rs {(price * quantity).toFixed(2)}</td>
+      <td className="px-6 py-4">
+        <button
+          className="text-red-600 hover:text-red-800 transition-colors duration-300"
+          onClick={() => removeCartItemHandler(id)}
+        >
+          X
+        </button>
       </td>
     </tr>
   );

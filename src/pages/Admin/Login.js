@@ -6,38 +6,39 @@ import { Button } from "../../components/common/Button/Button";
 import { Form } from "../../components/common/Form/Form";
 import { FormInput } from "../../components/common/FormInput/FormInput";
 import { Error } from "../../components/ui/Error";
-import { useAdminLoginMutation } from "../../features/auth/authApi";
 import { setTitle } from "../../utils/setTitle";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const navigate = useNavigate();
 
-  const [adminLogin, { isLoading, isSuccess, error: resError }] =
-    useAdminLoginMutation();
-
   useEffect(() => {
     setError("");
-    if (!isLoading && isSuccess) {
-      toast.success("Admin Login SuccessFull");
-      return navigate("/admin/dashboard");
+    if (error.length > 0) {
+      setError("Invalid email or password");
     }
-    if (resError?.error) {
-      setError(resError.error);
-    }
-    if (resError?.status) {
-      setError(resError?.data?.message);
-    }
-  }, [isLoading, isSuccess, resError, navigate]);
+  }, [isLoading, isSuccess, error, navigate]);
 
   //handle login
   const handleSubmit = (e) => {
-    e.preventDefault();
-    adminLogin({ email, password });
-  };
+    if (email === "" || password === "") {
+      return setError("Please fill all the fields");
+    } else {
+      setIsSuccess(true);
+      setError("");
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate("/admin/dashboard");
+        toast.success("Login Success");
+      });
+    };
+  }
   //set page title
   setTitle("Login User");
   return (

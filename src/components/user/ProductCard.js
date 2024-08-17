@@ -15,6 +15,7 @@ export const ProductCard = ({ product }) => {
 
   // Add to cart handler
   const addToCartHandler = (item) => {
+    console.table(item);
     dispatch(addToCart(item));
     toast.success("Product Added To Cart");
   };

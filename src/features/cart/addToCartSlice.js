@@ -11,7 +11,7 @@ const addToCartSlice = createSlice({
     addToCart: (state, action) => {
       const newItem = action.payload;
       const productExt = state.cartItems.find(
-        (product) => product._id === newItem._id
+        (product) => product.id === newItem.id
       );
 
       if (productExt) {
@@ -22,19 +22,19 @@ const addToCartSlice = createSlice({
     },
     increaseQty: (state, action) => {
       const product = state.cartItems.find(
-        (item) => item._id === action.payload.id
+        (item) => item.id === action.payload.id
       );
       product.quantity = action.payload.data;
     },
     decreaseQty: (state, action) => {
       const product = state.cartItems.find(
-        (item) => item._id === action.payload.id
+        (item) => item.id === action.payload.id
       );
       product.quantity = action.payload.data;
     },
     removeCart: (state, action) => {
       state.cartItems = state.cartItems.filter(
-        (item) => item._id !== action.payload
+        (item) => item.id !== action.payload
       );
     },
   },

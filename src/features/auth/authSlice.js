@@ -10,8 +10,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     adminLoggedIn: (state, action) => {
-      state.accessToken = action.payload.accessToken;
-      state.admin = action.payload.admin;
+      state.accessToken = 'euibhdcsjj3787327bdu3ytyey3';
+      state.admin = true;
     },
     adminLoggedOut: (state) => {
       state.accessToken = undefined;

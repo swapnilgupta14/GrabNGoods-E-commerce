@@ -10,7 +10,7 @@ export const PublicRoute = ({ children }) => {
   const admin = useSelector(selectAdminInfo);
   const accessToken = useSelector(selectAdminAccessToken);
 
-  return admin !== undefined && accessToken !== undefined ? (
+  return admin ? (
     <Navigate to="/admin/dashboard" />
   ) : (
     children
