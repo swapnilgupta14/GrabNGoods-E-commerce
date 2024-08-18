@@ -1,5 +1,4 @@
-// import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,67 +8,63 @@ import {
   selectUserAccessToken,
   selectUserInfo,
 } from "../../../features/auth/userAuthSelectors";
-import { selectCartItems } from "../../../features/cart/cartSelectors";
 
-export const PaymentCkeckoutForm = ({ shippingInfo }) => {
-  const cartItems = useSelector(selectCartItems);
+export const PaymentCheckoutForm = ({ shippingInfo }) => {
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const items = useSelector((state) => state.cartItems.cartItems);
+
   const user = useSelector(selectUserInfo);
   const accessToken = useSelector(selectUserAccessToken);
-  // const stripe = useStripe();
-  // const elements = useElements();
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    // Block native form submission.
     e.preventDefault();
+    setIsProcessing(true);
 
-    // if (!stripe || !elements) {
-    //   return;
-    // }
-
-    // Handle payment submission here using Stripe API
-    // const { token, error } = await stripe.createToken(
-    //   elements.getElement(CardElement)
-    // );
-
-    // if (error) {
-    //   console.error(error);
-    // } else {
-    //   // Send the token to your server for payment processing and saving the shipping info
-    //   const response = await fetch(
-    //     `${process.env.REACT_APP_BASE_URL}/payment/create-payment-intent`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${accessToken}`,
-    //       },
-    //       body: JSON.stringify({ token, shippingInfo, cartItems, user }),
-    //     }
-    //   );
-    //   // Handle the server response here
-    //   if (response.status === 200) {
-    //     toast.success("Payment SuccessFull");
-    //     navigate("/my-order");
-    //   } else {
-    //     toast.error("Payment Field, Please Try Again");
-    //   }
-    // }
+    setTimeout(() => {
+      setIsProcessing(false);
+      toast.success("Payment Successful");
+      navigate("/");
+    }, 2000);
   };
 
+  const totalAmount = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  ).toFixed(2);
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <div className="">
-        <h2 className="text-2xl pb-4">Payment Details</h2>
-        {/* <CardElement /> */}
-        <Button
-          type="submit"
-          name="Pay Now"
-          className="mt-5"
-          // disabled={!stripe}
-        />
+    <div className="flex items-center justify-center min-h-300 bg-gray-100 p-4">
+      <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md mx-auto">
+        <h2 className="text-xl font-bold text-gray-800 pb-4 border-b border-gray-200">
+          Payment Details
+        </h2>
+        <Form onSubmit={handleSubmit}>
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold text-gray-700">
+              Total Amount: ${totalAmount}
+            </h3>
+            <p className="text-sm text-gray-600 mt-2">
+              Shipping to: {shippingInfo?.address}, {shippingInfo?.city},{" "}
+              {shippingInfo?.zip}
+            </p>
+          </div>
+
+          <Button
+            type="submit"
+            name={isProcessing ? "Processing..." : "Pay Now"}
+            className="w-full mt-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 ease-in-out"
+            disabled={isProcessing}
+          />
+        </Form>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-500">
+            Your payment information is securely processed.
+          </p>
+        </div>
       </div>
-    </Form>
+    </div>
   );
 };

@@ -1,67 +1,74 @@
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
 import React, { useState } from "react";
 import { Form } from "../../../components/common/Form/Form";
 import { FormInput } from "../../../components/common/FormInput/FormInput";
-import { PaymentCkeckoutForm } from "./PaymentCkeckoutForm";
-
-// const stripePromise = loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
+import { PaymentCheckoutForm } from "./PaymentCkeckoutForm";
 
 export const Order = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [address, setAddress] = useState("");
+
   const shippingInfo = {
     name,
     email,
     number,
     address,
   };
+
   return (
-    <div className="container mx-auto my-5 flex justify-center gap-5 mt-10 sm:px-0">
-      <Form>
-        <h2 className="text-2xl pb-4">Shpping Details</h2>
-        <FormInput
-          label="Your Name"
-          type="text"
-          name="name"
-          placeholder="Enter your name here"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <FormInput
-          label="Your Email"
-          type="email"
-          name="email"
-          placeholder="Enter your email here"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <FormInput
-          label="Your Phone Number"
-          type="number"
-          name="number"
-          placeholder="Enter your phone number here"
-          required
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-        />
-        <FormInput
-          label="Your Address"
-          type="text"
-          name="adress"
-          placeholder="Enter your adress here"
-          required
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-      </Form>
-      {/* <Elements stripe={stripePromise}>
-        <PaymentCkeckoutForm shippingInfo={shippingInfo} />
-      </Elements> */}
+    <div className="container mx-auto my-10 flex flex-col lg:flex-row justify-center items-start gap-6 px-4 h-screen">
+      {/* Shipping Details Form */}
+      <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md transition-transform hover:scale-105 duration-300 ease-in-out">
+        <Form>
+          <h2 className="text-2xl font-bold text-gray-800 pb-4">Shipping Details</h2>
+          <FormInput
+            label="Full Name"
+            type="text"
+            name="name"
+            placeholder="Swapnil Gupta"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mb-3"
+          />
+          <FormInput
+            label="Email Address"
+            type="email"
+            name="email"
+            placeholder="mail.grabNgoods@gmail.com"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mb-3"
+          />
+          <FormInput
+            label="Phone Number"
+            type="text"
+            name="number"
+            placeholder="0512-23452345345"
+            required
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className="mb-3"
+          />
+          <FormInput
+            label="Shipping Address"
+            type="text"
+            name="address"
+            placeholder="GrabNGoods, Kanpur, India"
+            required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="mb-3"
+          />
+        </Form>
+      </div>
+
+      {/* Payment Checkout Form */}
+      <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md transition-transform hover:scale-105 duration-300 ease-in-out">
+        <PaymentCheckoutForm shippingInfo={shippingInfo} />
+      </div>
     </div>
   );
 };

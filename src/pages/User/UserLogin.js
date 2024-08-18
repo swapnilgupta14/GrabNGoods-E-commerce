@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/common/Button/Button";
 import { Form } from "../../components/common/Form/Form";
 import { FormInput } from "../../components/common/FormInput/FormInput";
-import { useUserLoginMutation } from "../../features/auth/userAuthApi";
 import { setTitle } from "../../utils/setTitle";
 import { toast } from "react-hot-toast";
 import { Error } from "../../components/ui/Error";
@@ -13,31 +12,34 @@ export const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const navigate = useNavigate();
-
-  const [userLoggedIn, { isLoading, isSuccess, error: resError }] =
-    useUserLoginMutation();
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
       toast.success("Login Successful");
-      navigate("/");
+      navigate("/order");
     }
-    if (!isLoading && !isSuccess && resError) {
-      setError(resError.data?.message);
-      console.log(resError);
+    if (!isLoading && !isSuccess && error) {
+      console.log("Login Error:", error);
     }
-  }, [isLoading, isSuccess, navigate, resError]);
+  }, [isLoading, isSuccess, navigate, error]);
 
-  //user Login Handler
+  // Mock user login handler for testing
   const userLoginHandler = (e) => {
     e.preventDefault();
     setError("");
-    userLoggedIn({ email, password });
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+    }, 1000); 
   };
 
-  //set page title
+  // Set page title
   setTitle("User Login");
 
   return (
@@ -71,7 +73,11 @@ export const UserLogin = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button name="Login" className="w-full mt-6" />
+          <Button
+            name={isLoading ? "Logging in..." : "Login"}
+            className="w-full mt-6"
+            disabled={isLoading}
+          />
         </Form>
         {error && <Error error={error} className="mt-4" />}
         <div className="mt-8 text-center">

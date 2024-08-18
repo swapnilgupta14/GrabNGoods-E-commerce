@@ -8,7 +8,6 @@ import { CheckOutTotal } from "./CheckOutTotal";
 export const CheckOut = () => {
   const cartItems = useSelector(selectCartItems);
 
-  // Determine content based on cart items
   let content;
   if (cartItems?.length === 0) {
     content = (

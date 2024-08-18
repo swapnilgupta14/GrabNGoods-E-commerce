@@ -86,13 +86,10 @@ function App() {
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/search" element={<Search />} />
 
-        {/* user private routes */}
         <Route
           path="/order"
           element={
-            <UserPrivateRoute>
               <Order />
-            </UserPrivateRoute>
           }
         />
         <Route
@@ -110,65 +107,65 @@ function App() {
         <Route
           path="/admin/dashboard"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <Dashboard />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
         <Route
           path="/admin/all-brands"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <AllBrands />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
         <Route
           path="/admin/add-brand"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <AddBrand />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
         <Route
           path="/admin/all-categories"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <AllCategories />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
         <Route
           path="/admin/add-category"
           element={
-            <PrivateRoute>
+        //    <PrivateRoute>
               <AddCategory />
-            </PrivateRoute>
+      //   </PrivateRoute>
           }
         />
         <Route
           path="/admin/all-products"
           element={
-            <PrivateRoute>
+       //     <PrivateRoute>
               <AllProducts />
-            </PrivateRoute>
+     //       </PrivateRoute>
           }
         />
         <Route
           path="/admin/add-product"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <AddProduct />
-            </PrivateRoute>
+           // </PrivateRoute>
           }
         />
         <Route
           path="/admin/orders"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <AllOrder />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
       </Route>
